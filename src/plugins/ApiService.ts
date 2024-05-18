@@ -1,4 +1,5 @@
-import axios, { AxiosInstance } from 'axios'
+import axios, {AxiosInstance} from 'axios'
+
 export class ApiService {
   private static _instance: ApiService
 

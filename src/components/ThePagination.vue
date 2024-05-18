@@ -16,7 +16,8 @@ const emits = defineEmits<IEmits>()
 const pagination = ref<PokemonModule.Meta>(props.data)
 const currentPage = ref<number>(1)
 
-function changePage(page: number) {
+function changePage(page?: number) {
+  if (!page) page =1
   currentPage.value = page
   emits('pageChange', page)
 }
@@ -26,7 +27,7 @@ watch(
   (newVal) => {
     if (!newVal) return
     pagination.value = { ...newVal }
-    currentPage.value = newVal.current_page
+    currentPage.value = newVal.current_page || 1
   },
   { deep: true, immediate: true }
 )
@@ -38,9 +39,9 @@ watch(
           class="ionicon ionicon-chevron-back-outline pagination-arrow pagination-button"
           :class="{disabled: currentPage === 1 }"
     ></span>
-    <template v-if="pagination.last_page <= 5">
+    <template v-if="pagination.last_page && pagination?.last_page <= 5">
       <span
-        v-for="i in pagination.last_page"
+        v-for="i in pagination?.last_page"
         :key="i"
         class="pagination-button"
         :class="{ isActive: currentPage === i }"
@@ -61,37 +62,37 @@ watch(
         <span class="pagination-button">...</span>
         <span
             class="pagination-button"
-            :class="{ isActive: currentPage === pagination.last_page }"
-            @click="changePage(pagination.last_page)"
-        >{{ pagination.last_page }}</span
+            :class="{ isActive: currentPage === pagination?.last_page }"
+            @click="changePage(pagination?.last_page)"
+        >{{ pagination?.last_page }}</span
         >
       </template>
-      <template v-else-if="currentPage > pagination.last_page - 3">
+      <template v-else-if="pagination.last_page && currentPage > pagination?.last_page - 3">
         <span class="pagination-button" @click="changePage(1)">1</span>
         <span class="pagination-button">...</span>
         <span
           class="pagination-button"
-          :class="{ isActive: currentPage === pagination.last_page - 3 }"
-          @click="changePage(pagination.last_page - 3)"
-          >{{ pagination.last_page - 3 }}</span
+          :class="{ isActive: currentPage === pagination?.last_page - 3 }"
+          @click="changePage(pagination?.last_page - 3)"
+          >{{ pagination?.last_page - 3 }}</span
         >
         <span
           class="pagination-button"
-          :class="{ isActive: currentPage === pagination.last_page - 2 }"
-          @click="changePage(pagination.last_page - 2)"
-          >{{ pagination.last_page - 2 }}</span
+          :class="{ isActive: currentPage === pagination?.last_page - 2 }"
+          @click="changePage(pagination?.last_page - 2)"
+          >{{ pagination?.last_page - 2 }}</span
         >
         <span
           class="pagination-button"
-          :class="{ isActive: currentPage === pagination.last_page - 1 }"
-          @click="changePage(pagination.last_page - 1)"
-          >{{ pagination.last_page - 1 }}</span
+          :class="{ isActive: currentPage === pagination?.last_page - 1 }"
+          @click="changePage(pagination?.last_page - 1)"
+          >{{ pagination?.last_page - 1 }}</span
         >
         <span
           class="pagination-button"
-          :class="{ isActive: currentPage === pagination.last_page }"
-          @click="changePage(pagination.last_page)"
-          >{{ pagination.last_page }}</span
+          :class="{ isActive: currentPage === pagination?.last_page }"
+          @click="changePage(pagination?.last_page)"
+          >{{ pagination?.last_page }}</span
         >
       </template>
       <template v-else>
@@ -104,15 +105,15 @@ watch(
         <span class="pagination-button">...</span>
         <span
           class="pagination-button"
-          :class="{ isActive: currentPage === pagination.last_page }"
-          @click="changePage(pagination.last_page)"
-          >{{ pagination.last_page }}</span
+          :class="{ isActive: currentPage === pagination?.last_page }"
+          @click="changePage(pagination?.last_page)"
+          >{{ pagination?.last_page }}</span
         >
       </template>
     </template>
     <span @click="changePage(currentPage + 1)"
           class="ionicon ionicon-chevron-forward-outline pagination-arrow pagination-button"
-          :class="{disabled: currentPage === pagination.last_page }"
+          :class="{disabled: currentPage === pagination?.last_page }"
     ></span>
   </div>
 </template>

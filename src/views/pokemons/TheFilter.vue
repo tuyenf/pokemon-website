@@ -3,6 +3,7 @@ import { onMounted, ref, watch } from 'vue'
 import {PokemonStore, usePokemonStore} from "@/stores/pokemon";
 import {SortType} from "@/plugins/Constant";
 import TheNoData from "@/components/TheNoData.vue";
+import {PokemonModule} from "@/@types/pokemon";
 
 const pokemonStore: PokemonStore = usePokemonStore()
 

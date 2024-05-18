@@ -1,4 +1,4 @@
-declare namespace PokemonModule {
+export declare namespace PokemonModule {
   interface Filter {
     type: number | null
   }
